@@ -3,6 +3,9 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'moti
 import ParticleField from '../components/ui/ParticleField';
 import MagneticButton from '../components/ui/MagneticButton';
 import { useContent } from '../lib/useContent';
+import { isTouch, skipLoopingAnimation } from '../lib/device';
+
+const pulse = !skipLoopingAnimation;
 
 export default function Hero() {
   const hero = useContent('hero');
@@ -28,13 +31,16 @@ export default function Hero() {
   const py2 = useTransform(smy, (v) => v * -16);
 
   useEffect(() => {
+    // Pointer parallax can never fire on touch, but the listener still runs on
+    // every synthesised move event.
+    if (isTouch) return;
     const onMove = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       mx.set((e.clientX - cx) / cx);
       my.set((e.clientY - cy) / cy);
     };
-    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mousemove', onMove, { passive: true });
     return () => window.removeEventListener('mousemove', onMove);
   }, [mx, my]);
 
@@ -47,30 +53,32 @@ export default function Hero() {
       {/* Grid background */}
       <motion.div style={{ y: y1 }} className="absolute inset-0 grid-bg grid-bg-fade opacity-60" />
 
-      {/* Radial glow */}
+      {/* Radial glow. The breathing `scale` loop is desktop-only: scaling a node
+          that contains a large blur forces the compositor to re-rasterize that
+          blur on every frame, which alone can halve the frame rate on a phone. */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           style={{ x: px2, y: py2 }}
           className="absolute top-1/4 -left-40 w-[700px] h-[700px] rounded-full opacity-30"
-          animate={{ scale: [1, 1.08, 1] }}
+          animate={pulse ? { scale: [1, 1.08, 1] } : undefined}
           transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <div className="w-full h-full bg-dv-azure rounded-full blur-[160px]" />
+          <div className="w-full h-full bg-dv-azure rounded-full orb" />
         </motion.div>
         <motion.div
           style={{ x: px, y: py }}
           className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full opacity-20"
-          animate={{ scale: [1, 1.12, 1] }}
+          animate={pulse ? { scale: [1, 1.12, 1] } : undefined}
           transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         >
-          <div className="w-full h-full bg-dv-cobalt rounded-full blur-[180px]" />
+          <div className="w-full h-full bg-dv-cobalt rounded-full orb" />
         </motion.div>
         <motion.div
           className="absolute top-10 right-20 w-[280px] h-[280px] rounded-full opacity-15"
-          animate={{ scale: [1, 1.1, 1] }}
+          animate={pulse ? { scale: [1, 1.1, 1] } : undefined}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
         >
-          <div className="w-full h-full bg-dv-gold rounded-full blur-[160px]" />
+          <div className="w-full h-full bg-dv-gold rounded-full orb" />
         </motion.div>
       </div>
 

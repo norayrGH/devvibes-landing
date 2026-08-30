@@ -30,13 +30,17 @@ export const DEFAULT_CONTENT: SiteContent = {
   hero: {
     tagline: 'PREMIUM SOFTWARE STUDIO',
     badge: 'EST. 2017',
+    // Capability cells rather than a track record. These were invented volume
+    // metrics (200+ products, 44 countries, 99.99% uptime) that nobody could
+    // check; capabilities say something true and still fill the same grid.
+    // Swap in real numbers from the admin once there are numbers to swap in.
     subtitle:
-      'A senior engineering studio designing and shipping AI, fintech, SaaS, and enterprise platforms for ambitious teams across four continents.',
+      'A senior engineering studio designing and shipping AI, web, and mobile platforms — from first architecture through to the system running in production.',
     stats: [
-      { value: '200+', label: 'Products shipped' },
-      { value: '44', label: 'Countries served' },
-      { value: '99.99%', label: 'Avg. uptime' },
-      { value: '8 yrs', label: 'In production' },
+      { value: 'AI', label: 'Agents & automation' },
+      { value: 'Web', label: 'Platforms & apps' },
+      { value: 'Mobile', label: 'iOS & Android' },
+      { value: 'Design', label: 'UI/UX in-house' },
     ],
   },
   contact: {

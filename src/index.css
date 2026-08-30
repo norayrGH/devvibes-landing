@@ -13,13 +13,23 @@
 }
 
 html, body, #root {
-  height: 100%;
+  /* min-height, not height: pinning these to 100% while the content is far
+     taller is what makes the body a scroll container rather than the page. */
+  min-height: 100%;
   background: var(--dv-ink);
   color: #F4F5F7;
 }
 
 html {
   scroll-behavior: smooth;
+  /* Horizontal clipping belongs on the root, not on <body>. When `overflow-x`
+     is `hidden` on the body, CSS forces its `overflow-y` to compute to `auto`,
+     so the body becomes its own scroller: window.scrollY stays pinned at 0,
+     every useScroll()-driven effect silently dies, and iOS momentum scrolling
+     and the address-bar collapse both misbehave. On the root element the
+     overflow instead propagates to the viewport, which keeps the document as
+     the scrolling element. */
+  overflow-x: hidden;
 }
 
 body {
@@ -28,7 +38,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
   letter-spacing: -0.01em;
   background:
     radial-gradient(1200px 700px at 80% -10%, rgba(30, 64, 175, 0.18), transparent 60%),
@@ -310,4 +319,56 @@ body {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ============ Decorative glow orbs ============ */
+/* A 160–200px blur on a 600–900px box is the single most expensive thing the
+   compositor does on this page. Radius drives cost superlinearly, so mobile
+   gets a much smaller one — at these opacities the two are near-identical. */
+.orb {
+  border-radius: 9999px;
+  filter: blur(var(--orb, 160px));
+}
+
+.loader-bar {
+  animation: loader-slide 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes loader-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+@media (max-width: 767px) {
+  .orb {
+    filter: blur(var(--orb-mobile, 48px));
+  }
+
+  /* backdrop-filter re-composites everything behind the element on every
+     scroll frame. It is the main cause of scroll jank on mobile Safari, and
+     over an already-dark page the blur reads as nothing. Swap in opaque
+     backgrounds instead. */
+  .glass,
+  .glass-strong,
+  .glass-dark,
+  .btn-ghost {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .glass { background: rgba(255, 255, 255, 0.05); }
+  .glass-strong { background: rgba(20, 23, 31, 0.92); }
+  .glass-dark { background: rgba(8, 9, 12, 0.94); }
+  .btn-ghost { background: rgba(255, 255, 255, 0.06); }
+
+  /* The grain overlay forces an extra full-viewport composited layer with a
+     blend mode. Not worth it on a small screen. */
+  .grain::after { display: none; }
+
+  /* Hover-only flourishes that can never fire on touch, but still create
+     paint layers. */
+  .glass-card::before,
+  .glow-ring::after { display: none; }
+
+  .beam-line::before { animation: none; opacity: 0.35; }
 }

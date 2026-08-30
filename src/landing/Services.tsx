@@ -63,7 +63,7 @@ export default function Services() {
   return (
     <section id="services" className="relative py-28 md:py-40 overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-dv-deep rounded-full blur-[160px] opacity-20" />
+      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-dv-deep rounded-full orb opacity-20" />
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-8">
         <div className="grid lg:grid-cols-12 gap-12 items-end">

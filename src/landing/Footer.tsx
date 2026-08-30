@@ -16,7 +16,7 @@ const SOCIAL = [
 export default function Footer() {
   return (
     <footer className="relative pt-24 pb-12 overflow-hidden border-t border-white/[0.05]">
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-dv-deep rounded-full blur-[180px] opacity-30" />
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-dv-deep rounded-full orb opacity-30" />
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-8">
         {/* Giant wordmark */}

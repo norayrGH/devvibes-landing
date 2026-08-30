@@ -30,7 +30,7 @@ export default function AdminApp() {
   return (
     <div className="min-h-screen bg-dv-ink text-white grain relative">
       <div className="absolute inset-0 grid-bg grid-bg-fade opacity-20 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-dv-azure/15 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-dv-azure/15 rounded-full orb pointer-events-none" />
 
       <div className="relative max-w-5xl mx-auto px-5 md:px-8 py-10 md:py-14">
         <header className="flex items-center justify-between mb-12">

@@ -25,8 +25,8 @@ export default function FinalCTA() {
         style={{ y: yBg }}
         className="absolute inset-0 pointer-events-none"
       >
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-dv-azure/20 blur-[200px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full bg-dv-gold/10 blur-[180px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-dv-azure/20 orb" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full bg-dv-gold/10 orb" />
       </motion.div>
 
       <div className="absolute inset-0 grid-bg grid-bg-fade opacity-30 pointer-events-none" />

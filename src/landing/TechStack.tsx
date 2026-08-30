@@ -39,7 +39,7 @@ export default function TechStack() {
   return (
     <section id="stack" className="relative py-28 md:py-40 overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 mx-auto w-[600px] h-[600px] bg-dv-azure rounded-full blur-[180px] opacity-10" />
+      <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 mx-auto w-[600px] h-[600px] bg-dv-azure rounded-full orb opacity-10" />
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-8">
         <div className="grid lg:grid-cols-12 gap-12 items-end">

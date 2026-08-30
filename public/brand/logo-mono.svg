@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 64" width="300" height="64" role="img" aria-label="DEVVIBES">
+  <title>DEVVIBES logo — single colour</title>
+  <!-- Single-colour lockup for print, embroidery, watermarks, and anywhere the
+       gradient or the gold accent can't reproduce. Recolour by setting `fill`
+       on the root <g>; every shape inherits it.
+
+       The tile is one evenodd path with three nested contours — rounded
+       rectangle, then the "D" outline knocked out of it, then the bowl's
+       counter filled back in — so the mark stays a single shape in one colour. -->
+  <g fill="#08090C">
+    <path fill-rule="evenodd" d="M14 0H50A14 14 0 0 1 64 14V50A14 14 0 0 1 50 64H14A14 14 0 0 1 0 50V14A14 14 0 0 1 14 0ZM20 16v32h16c10 0 16-7 16-16s-6-16-16-16H20ZM28 23.5h7.5c5 0 8.5 3 8.5 8.5s-3.5 8.5-8.5 8.5H28v-17Z"/>
+    <text x="80" y="43"
+          font-family="'Space Grotesk','Space Grotesk Variable',system-ui,-apple-system,'Segoe UI',sans-serif"
+          font-size="34" font-weight="700" letter-spacing="-1.2">DEVVIBES</text>
+  </g>
+</svg>
