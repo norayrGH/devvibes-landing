@@ -20,13 +20,15 @@ export type CaseStudy = {
   year: string;
   liveUrl: string;
   liveLabel: string;
+  /** Shown as a chip — say so plainly when the site has not launched yet. */
+  status: string;
   /** One-line positioning of the engagement. */
   summary: string;
   brief: string;
   workstreams: Workstream[];
   /** Scope facts — each one checkable on the live site. */
   facts: { value: string; label: string }[];
-  shots: { desktop: string; mobile: string };
+  shots: { desktop: string };
 };
 
 export const TOGHRAMAJYAN: CaseStudy = {
@@ -36,8 +38,12 @@ export const TOGHRAMAJYAN: CaseStudy = {
   sector: 'Healthcare',
   location: 'Yerevan, Armenia',
   year: '2026',
-  liveUrl: 'https://toghramajyanclinic.am',
-  liveLabel: 'toghramajyanclinic.am',
+  // The bare domain still serves a "Coming soon" holding page — the built site
+  // lives at /preview until the clinic launches it. Link the preview, or the
+  // CTA sends prospects to a placeholder.
+  liveUrl: 'https://toghramajyanclinic.am/preview',
+  liveLabel: 'toghramajyanclinic.am/preview',
+  status: 'Pre-launch preview',
   summary:
     'A trilingual clinic platform and an automated intake layer behind it.',
   brief:
@@ -72,7 +78,6 @@ export const TOGHRAMAJYAN: CaseStudy = {
   ],
   shots: {
     desktop: '/work/toghramajyan-desktop.png',
-    mobile: '/work/toghramajyan-mobile.png',
   },
 };
 

@@ -26,7 +26,7 @@ export default function CaseStudies() {
           <div className="lg:col-span-5">
             <p className="text-dv-fog text-base md:text-lg leading-relaxed">
               We would rather show you one platform you can open right now than a page of logos you
-              cannot verify. Everything below is live.
+              cannot verify.
             </p>
           </div>
         </div>
@@ -51,6 +51,7 @@ function FeaturedCase({ study }: { study: CaseStudy }) {
         <div className="p-7 sm:p-10 md:p-14 order-2 lg:order-1">
           <div className="flex items-center gap-3 flex-wrap">
             <span className="tag tag-gold">{study.sector}</span>
+            <span className="tag">{study.status}</span>
             <span className="mono text-[10px] tracking-[0.24em] text-dv-mute uppercase">
               {study.location} · {study.year}
             </span>
@@ -112,7 +113,7 @@ function FeaturedCase({ study }: { study: CaseStudy }) {
               rel="noopener noreferrer"
               className="btn-primary"
             >
-              VISIT LIVE SITE
+              VIEW LIVE PREVIEW
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                 <path
                   d="M3 9 L9 3 M9 3 H4 M9 3 V8"
