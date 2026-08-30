@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useInView, useScroll, useTransform } from 'motion/react';
 import MagneticButton from '../components/ui/MagneticButton';
 import ParticleField from '../components/ui/ParticleField';
 import { useContent } from '../lib/useContent';
@@ -109,12 +109,22 @@ export default function FinalCTA() {
 }
 
 function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  // Observe the mask, not the span inside it.
+  //
+  // `whileInView` observes the element it sits on. That inner span starts at
+  // y:110%, i.e. entirely outside this overflow:hidden box — and
+  // IntersectionObserver clips the intersection rect against ancestor overflow,
+  // so its visible ratio is pinned at 0. The threshold is never met, the
+  // animation that would bring it back into the box never starts, and the text
+  // stays invisible forever. It hid itself where the observer cannot see it.
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+
   return (
-    <span className="inline-block overflow-hidden align-top">
+    <span ref={ref} className="inline-block overflow-hidden align-top">
       <motion.span
         initial={{ y: '110%' }}
-        whileInView={{ y: '0%' }}
-        viewport={{ once: true, amount: 0.4 }}
+        animate={inView ? { y: '0%' } : undefined}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay }}
         className="inline-block"
       >
