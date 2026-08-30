@@ -1,9 +1,13 @@
+# devvibes.dev is served by a Worker (not Pages) with static assets.
+# This previously carried `pages_build_output_dir`, which put wrangler in Pages
+# mode and pointed at a Pages project that does not exist — so neither CI nor a
+# local `wrangler deploy` could ever update the live site.
+
 name = "devvibes-landing"
-pages_build_output_dir = "dist"
 compatibility_date = "2024-01-15"
 
-[vars]
-# Public env vars (non-secret) can go here.
-# Secret vars (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY) must be set via
-# `wrangler pages secret put` or in the Cloudflare dashboard:
-# Workers & Pages → devvibes-landing → Settings → Environment Variables
+[assets]
+directory = "./dist"
+# The admin lives behind a hash route, but serving index.html for unknown paths
+# keeps deep links and refreshes working rather than returning a bare 404.
+not_found_handling = "single-page-application"

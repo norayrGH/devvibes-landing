@@ -1,8 +1,31 @@
-name: Deploy to Cloudflare Pages
+# devvibes.dev is served by a Cloudflare *Worker* with static assets, not by
+# Pages. This workflow previously used cloudflare/pages-action against a Pages
+# project named "devvibes-landing" that has never existed, so it could not have
+# worked even with credentials present.
+#
+# Automatic deploys are off: they need CLOUDFLARE_API_TOKEN and
+# CLOUDFLARE_ACCOUNT_ID as repository secrets, and without them every push goes
+# red for no useful reason. Deploys currently happen from a developer machine
+# via `npx wrangler deploy`, which authenticates through `wrangler login` and
+# needs no token.
+#
+# To turn automatic deploys back on:
+#   1. gh secret set CLOUDFLARE_API_TOKEN      (Cloudflare → My Profile → API
+#      Tokens → Create Token → "Edit Cloudflare Workers")
+#   2. gh secret set CLOUDFLARE_ACCOUNT_ID     (f606727218ae7128a33055777a37628c)
+#   3. gh secret set VITE_SUPABASE_URL
+#   4. gh secret set VITE_SUPABASE_ANON_KEY
+#   5. restore the `push` trigger below
+#
+# Without the two VITE_* secrets the build still succeeds — the app falls back
+# to bundled default content — but the deployed site cannot reach Supabase, so
+# the admin will not sign in and edits will not appear.
+
+name: Deploy to Cloudflare Workers
 
 on:
-  push:
-    branches: [master]
+  # push:
+  #   branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -14,12 +37,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -31,13 +54,9 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: devvibes-landing
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
-          wranglerVersion: '3'
+          command: deploy
