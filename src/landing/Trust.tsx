@@ -34,14 +34,14 @@ export default function Trust() {
           className="flex justify-center"
         >
           <a
-            href={TOGHRAMAJYAN.liveUrl}
+            href={TOGHRAMAJYAN.live?.url ?? '#work'}
             target="_blank"
             rel="noopener noreferrer"
             className="group glass-card px-7 py-6 md:px-10 md:py-7 flex items-center gap-6 md:gap-9 hover:border-white/15 transition-colors"
           >
             <div>
               <div className="display text-xl md:text-2xl tracking-[0.01em]">
-                {TOGHRAMAJYAN.client}
+                {TOGHRAMAJYAN.name}
               </div>
               <div className="mono text-[10px] tracking-[0.2em] text-dv-mute mt-2 uppercase">
                 {TOGHRAMAJYAN.sector} · {TOGHRAMAJYAN.location}
