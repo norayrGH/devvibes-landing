@@ -79,7 +79,7 @@ function FeaturedCase({ study }: { study: CaseStudy }) {
   );
 }
 
-/* ============ Own product — text-led, no screenshot ============ */
+/* ============ Own product — same shape, labelled as ours ============ */
 
 function ProductCase({ study }: { study: CaseStudy }) {
   return (
@@ -88,48 +88,46 @@ function ProductCase({ study }: { study: CaseStudy }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      className="relative mt-6 glass-card p-7 sm:p-10 md:p-14 overflow-hidden"
+      className="relative mt-6 glass-card overflow-hidden"
     >
       <div className="absolute inset-0 grid-bg opacity-[0.06] pointer-events-none" />
 
-      <div className="relative">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-14">
-          <div className="lg:col-span-5">
-            <CaseMeta study={study} />
-            <h3 className="display text-3xl md:text-4xl lg:text-5xl leading-[0.95] mt-7">
-              {study.name}
-            </h3>
-            <p className="mt-6 text-dv-fog text-base md:text-lg leading-relaxed">{study.summary}</p>
-          </div>
-
-          <div className="lg:col-span-7 lg:pt-2">
-            <span className="mono text-[10px] tracking-[0.24em] text-dv-gold uppercase">
-              The problem
-            </span>
-            <p className="mt-3 text-dv-fog text-sm md:text-base leading-relaxed">{study.brief}</p>
-            <Facts study={study} />
-            <LiveLink study={study} label="VIEW LIVE SITE" />
-          </div>
+      {/* Same shape as the client case — narrative left, live screenshot right. */}
+      <div className="relative grid lg:grid-cols-2">
+        <div className="p-7 sm:p-10 md:p-14 order-2 lg:order-1">
+          <CaseMeta study={study} />
+          <h3 className="display text-3xl md:text-4xl lg:text-5xl leading-[0.95] mt-7">
+            {study.name}
+          </h3>
+          <p className="mt-7 text-dv-fog text-base md:text-lg leading-relaxed">{study.summary}</p>
+          <Brief study={study} label="The problem" />
+          <Facts study={study} />
+          <LiveLink study={study} label="VIEW LIVE SITE" />
         </div>
 
-        {/* Full width rather than inside a 7-column well: three columns squeezed
-            into half the card wrapped every heading onto two lines. */}
-        <div className="mt-12 pt-10 border-t border-white/[0.07] grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-          {study.workstreams.map((ws) => (
-            <div key={ws.kind} className="flex flex-col">
-              <span className="tag tag-gold self-start">{ws.kind}</span>
-              <h4 className="display text-lg mt-4 tracking-[0.02em] leading-snug">{ws.title}</h4>
-              <ul className="mt-4 flex flex-col gap-2.5">
-                {ws.points.map((p) => (
-                  <li key={p} className="flex gap-2.5 text-dv-fog text-[13px] leading-relaxed">
-                    <span className="mt-[7px] w-1 h-1 rounded-full bg-dv-sky shrink-0" />
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <div className="relative order-1 lg:order-2 min-h-[280px] lg:min-h-full bg-gradient-to-bl from-dv-deep/40 to-transparent border-b lg:border-b-0 lg:border-l border-white/[0.06] flex items-center justify-center p-7 sm:p-10 md:p-12">
+          <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
+          <BrowserFrame study={study} />
         </div>
+      </div>
+
+      {/* Full card width: three columns squeezed beside the screenshot wrapped
+          every heading onto two lines. */}
+      <div className="relative px-7 sm:px-10 md:px-14 pb-10 md:pb-14 pt-10 border-t border-white/[0.07] grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {study.workstreams.map((ws) => (
+          <div key={ws.kind} className="flex flex-col">
+            <span className="tag tag-gold self-start">{ws.kind}</span>
+            <h4 className="display text-lg mt-4 tracking-[0.02em] leading-snug">{ws.title}</h4>
+            <ul className="mt-4 flex flex-col gap-2.5">
+              {ws.points.map((p) => (
+                <li key={p} className="flex gap-2.5 text-dv-fog text-[13px] leading-relaxed">
+                  <span className="mt-[7px] w-1 h-1 rounded-full bg-dv-sky shrink-0" />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </motion.article>
   );
@@ -151,10 +149,10 @@ function CaseMeta({ study }: { study: CaseStudy }) {
   );
 }
 
-function Brief({ study }: { study: CaseStudy }) {
+function Brief({ study, label = 'The brief' }: { study: CaseStudy; label?: string }) {
   return (
     <div className="mt-8 pt-8 border-t border-white/[0.07]">
-      <span className="mono text-[10px] tracking-[0.24em] text-dv-gold uppercase">The brief</span>
+      <span className="mono text-[10px] tracking-[0.24em] text-dv-gold uppercase">{label}</span>
       <p className="mt-3 text-dv-fog text-sm md:text-base leading-relaxed">{study.brief}</p>
     </div>
   );

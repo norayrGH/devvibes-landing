@@ -88,7 +88,7 @@ export const TOGHRAMAJYAN: CaseStudy = {
     { value: '24/7', label: 'Request intake' },
   ],
   shots: {
-    desktop: '/work/toghramajyan-desktop.png',
+    desktop: '/work/toghramajyan-desktop.jpg',
   },
 };
 
@@ -99,10 +99,11 @@ export const HOSPITY: CaseStudy = {
   sector: 'Hospitality',
   location: 'Built in-house',
   year: '2026',
-  status: 'In development',
-  // No `live`: hospity.devvibes.dev does not resolve, and hospity.com is a
-  // parked domain owned by someone else. Add a link only once there is a real
-  // host to point at.
+  status: 'Private beta',
+  live: {
+    url: 'https://hospity.devvibes.dev',
+    label: 'hospity.devvibes.dev',
+  },
   summary:
     'The guest already carries the best interface a hotel could ask for. Hospity turns a check-in QR into a front desk that never closes.',
   brief:
@@ -142,6 +143,9 @@ export const HOSPITY: CaseStudy = {
     { value: '4', label: 'Service domains' },
     { value: 'Realtime', label: 'Request routing' },
   ],
+  shots: {
+    desktop: '/work/hospity-desktop.jpg',
+  },
 };
 
 export const CASE_STUDIES: CaseStudy[] = [TOGHRAMAJYAN, HOSPITY];
