@@ -1,10 +1,6 @@
 import { motion } from 'motion/react';
+import { useCopy } from '../lib/i18n';
 
-const NAV = {
-  Studio: ['About', 'Process', 'Careers', 'Press'],
-  Services: ['AI Solutions', 'SaaS Platforms', 'Mobile Apps', 'Enterprise Systems'],
-  Work: ['Case studies', 'Testimonials', 'Partners', 'Awards'],
-};
 
 const SOCIAL = [
   { label: 'X', href: '#' },
@@ -14,6 +10,7 @@ const SOCIAL = [
 ];
 
 export default function Footer() {
+  const t = useCopy();
   return (
     <footer className="relative pt-24 pb-12 overflow-hidden border-t border-white/[0.05]">
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-dv-deep rounded-full orb opacity-30" />
@@ -33,11 +30,10 @@ export default function Footer() {
         <div className="grid lg:grid-cols-12 gap-12 pb-14 border-b border-white/[0.06]">
           <div className="lg:col-span-5">
             <div className="display text-2xl md:text-3xl tracking-[0.02em]">
-              Premium software<br />for ambitious teams.
+              {t.footer.tagA}<br />{t.footer.tagB}
             </div>
             <p className="mt-6 text-dv-fog text-sm leading-relaxed max-w-md">
-              A studio of senior engineers, designers, and product leaders building
-              software that ships and stays shipped.
+              {t.footer.body}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">
@@ -55,7 +51,7 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-7 grid grid-cols-3 gap-8">
-            {Object.entries(NAV).map(([heading, items]) => (
+            {t.footer.groups.map(({ title: heading, items }) => (
               <div key={heading}>
                 <div className="mono text-[10px] tracking-[0.28em] text-dv-gold uppercase mb-5">
                   {heading}
@@ -80,15 +76,17 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="mono text-[10px] tracking-[0.25em] text-dv-mute uppercase">
-            © 2026 DEVVIBES STUDIO · ALL RIGHTS RESERVED
+            {t.footer.rights}
           </div>
           <div className="flex items-center gap-6 mono text-[10px] tracking-[0.25em] text-dv-mute uppercase">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Cookies</a>
+            {t.footer.legal.map((l) => (
+              <a key={l} href="#" className="hover:text-white transition-colors">
+                {l}
+              </a>
+            ))}
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-dv-gold animate-pulse" />
-              ALL SYSTEMS NOMINAL
+              {t.footer.status}
             </span>
           </div>
         </div>

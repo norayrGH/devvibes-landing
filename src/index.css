@@ -321,6 +321,54 @@ body {
   }
 }
 
+/* ============ Armenian ============ */
+/* Space Grotesk, Inter and JetBrains Mono all ship without Armenian glyphs, so
+   in hy the browser would fall back per-glyph and render tofu or a mismatched
+   face mid-word. Noto Sans Armenian goes first in every stack, with the Latin
+   faces kept behind it so mixed strings ("AI", "iOS & Android", "CI/CD") still
+   render in the brand faces.
+
+   Tracking is also reset: the display styles run at -0.035em, which is tuned
+   for wide Latin caps and visibly collides Armenian letterforms. */
+html[lang='hy'] body,
+html[lang='hy'] .display,
+html[lang='hy'] .display-tight,
+html[lang='hy'] .mono,
+html[lang='hy'] .eyebrow,
+html[lang='hy'] .eyebrow-gold,
+html[lang='hy'] .tag,
+html[lang='hy'] .btn-primary,
+html[lang='hy'] .btn-ghost {
+  font-family: 'Noto Sans Armenian', 'Inter', system-ui, sans-serif;
+}
+
+html[lang='hy'] .display,
+html[lang='hy'] .display-tight {
+  letter-spacing: -0.005em;
+  line-height: 1.02;
+}
+
+html[lang='hy'] .mono,
+html[lang='hy'] .eyebrow,
+html[lang='hy'] .eyebrow-gold,
+html[lang='hy'] .tag,
+html[lang='hy'] .btn-primary,
+html[lang='hy'] .btn-ghost {
+  letter-spacing: 0.08em;
+}
+
+/* Armenian runs roughly a quarter longer than the English it replaces, and the
+   two hero-scale headlines are sized in vw for short Latin phrases. Left alone
+   they overflow several lines deep on a phone. Stepping the clamps down keeps
+   the same visual weight without the overflow. */
+html[lang='hy'] h1.display-tight {
+  font-size: clamp(2rem, 6.6vw, 5.5rem);
+}
+
+html[lang='hy'] #contact h2.display {
+  font-size: clamp(2.2rem, 8vw, 7rem);
+}
+
 /* ============ Decorative glow orbs ============ */
 /* A 160–200px blur on a 600–900px box is the single most expensive thing the
    compositor does on this page. Radius drives cost superlinearly, so mobile

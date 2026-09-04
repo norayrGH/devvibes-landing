@@ -2,8 +2,21 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { HOSPITY, TOGHRAMAJYAN, type CaseStudy } from '../lib/work';
+import { useCopy, type Copy } from '../lib/i18n';
+
+type CaseCopy = Copy['work']['cases'][number];
+
+/** Structure (slug, links, screenshots) stays in work.ts; prose comes from the
+ *  dictionary. Merging here keeps one source for each concern. */
+function merge(base: CaseStudy, copy: CaseCopy): CaseStudy {
+  return { ...base, ...copy };
+}
 
 export default function CaseStudies() {
+  const t = useCopy();
+  const client = merge(TOGHRAMAJYAN, t.work.cases[0]);
+  const product = merge(HOSPITY, t.work.cases[1]);
+
   return (
     <section id="work" className="relative py-28 md:py-40 overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-px divider-line" />
@@ -13,26 +26,25 @@ export default function CaseStudies() {
         <div className="grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
             <SectionHeader
-              eyebrow="SELECTED WORK"
-              index="04 ━━ WORK"
+              eyebrow={t.work.eyebrow}
+              index={t.work.index}
               title={
                 <>
-                  Shipped, live,<br />
-                  <span className="text-outline">and open to inspection.</span>
+                  {t.work.titleA}<br />
+                  <span className="text-outline">{t.work.titleB}</span>
                 </>
               }
             />
           </div>
           <div className="lg:col-span-5">
             <p className="text-dv-fog text-base md:text-lg leading-relaxed">
-              We would rather show you one platform you can open right now than a page of logos you
-              cannot verify.
+              {t.work.lead}
             </p>
           </div>
         </div>
 
-        <FeaturedCase study={TOGHRAMAJYAN} />
-        <ProductCase study={HOSPITY} />
+        <FeaturedCase study={client} copy={t.work} />
+        <ProductCase study={product} copy={t.work} />
       </div>
     </section>
   );
@@ -40,7 +52,7 @@ export default function CaseStudies() {
 
 /* ============ Client engagement — screenshot-led ============ */
 
-function FeaturedCase({ study }: { study: CaseStudy }) {
+function FeaturedCase({ study, copy }: { study: CaseStudy; copy: Copy['work'] }) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}
@@ -51,7 +63,7 @@ function FeaturedCase({ study }: { study: CaseStudy }) {
     >
       <div className="grid lg:grid-cols-2">
         <div className="p-7 sm:p-10 md:p-14 order-2 lg:order-1">
-          <CaseMeta study={study} />
+          <CaseMeta study={study} copy={copy} />
 
           <h3 className="display text-3xl md:text-4xl lg:text-5xl leading-[0.95] mt-7">
             {study.name}
@@ -64,10 +76,10 @@ function FeaturedCase({ study }: { study: CaseStudy }) {
 
           <p className="mt-7 text-dv-fog text-base md:text-lg leading-relaxed">{study.summary}</p>
 
-          <Brief study={study} />
+          <Brief study={study} label={copy.briefLabel} />
           <Workstreams study={study} />
           <Facts study={study} />
-          <LiveLink study={study} label="VIEW LIVE PREVIEW" />
+          <LiveLink study={study} label={copy.ctaClient} noLink={copy.noLink} />
         </div>
 
         <div className="relative order-1 lg:order-2 min-h-[280px] lg:min-h-full bg-gradient-to-br from-dv-deep/40 to-transparent border-b lg:border-b-0 lg:border-l border-white/[0.06] flex items-center justify-center p-7 sm:p-10 md:p-12">
@@ -81,7 +93,7 @@ function FeaturedCase({ study }: { study: CaseStudy }) {
 
 /* ============ Own product — same shape, labelled as ours ============ */
 
-function ProductCase({ study }: { study: CaseStudy }) {
+function ProductCase({ study, copy }: { study: CaseStudy; copy: Copy['work'] }) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 40 }}
@@ -95,14 +107,14 @@ function ProductCase({ study }: { study: CaseStudy }) {
       {/* Same shape as the client case — narrative left, live screenshot right. */}
       <div className="relative grid lg:grid-cols-2">
         <div className="p-7 sm:p-10 md:p-14 order-2 lg:order-1">
-          <CaseMeta study={study} />
+          <CaseMeta study={study} copy={copy} />
           <h3 className="display text-3xl md:text-4xl lg:text-5xl leading-[0.95] mt-7">
             {study.name}
           </h3>
           <p className="mt-7 text-dv-fog text-base md:text-lg leading-relaxed">{study.summary}</p>
-          <Brief study={study} label="The problem" />
+          <Brief study={study} label={copy.problemLabel} />
           <Facts study={study} />
-          <LiveLink study={study} label="VIEW LIVE SITE" />
+          <LiveLink study={study} label={copy.ctaProduct} noLink={copy.noLink} />
         </div>
 
         <div className="relative order-1 lg:order-2 min-h-[280px] lg:min-h-full bg-gradient-to-bl from-dv-deep/40 to-transparent border-b lg:border-b-0 lg:border-l border-white/[0.06] flex items-center justify-center p-7 sm:p-10 md:p-12">
@@ -135,12 +147,12 @@ function ProductCase({ study }: { study: CaseStudy }) {
 
 /* ============ Shared pieces ============ */
 
-function CaseMeta({ study }: { study: CaseStudy }) {
+function CaseMeta({ study, copy }: { study: CaseStudy; copy: Copy['work'] }) {
   return (
     <div className="flex items-center gap-3 flex-wrap">
       <span className="tag tag-gold">{study.sector}</span>
       {/* Own products are marked as such, so they can't read as a client win. */}
-      {study.kind === 'product' && <span className="tag">Own product</span>}
+      {study.kind === 'product' && <span className="tag">{copy.ownProduct}</span>}
       <span className="tag">{study.status}</span>
       <span className="mono text-[10px] tracking-[0.24em] text-dv-mute uppercase">
         {study.location} · {study.year}
@@ -149,7 +161,7 @@ function CaseMeta({ study }: { study: CaseStudy }) {
   );
 }
 
-function Brief({ study, label = 'The brief' }: { study: CaseStudy; label?: string }) {
+function Brief({ study, label }: { study: CaseStudy; label: string }) {
   return (
     <div className="mt-8 pt-8 border-t border-white/[0.07]">
       <span className="mono text-[10px] tracking-[0.24em] text-dv-gold uppercase">{label}</span>
@@ -197,11 +209,11 @@ function Facts({ study }: { study: CaseStudy }) {
 }
 
 /** Renders nothing when there is no public URL, rather than linking a dead host. */
-function LiveLink({ study, label }: { study: CaseStudy; label: string }) {
+function LiveLink({ study, label, noLink }: { study: CaseStudy; label: string; noLink: string }) {
   if (!study.live) {
     return (
       <p className="mt-10 mono text-[10px] tracking-[0.2em] text-dv-mute uppercase">
-        Private beta — ask us for a walkthrough
+        {noLink}
       </p>
     );
   }

@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import SectionHeader from '../components/ui/SectionHeader';
+import { useCopy } from '../lib/i18n';
 
 const TECH = [
   { name: 'React', tier: 'frontend' },
@@ -26,16 +27,10 @@ const TECH = [
   { name: 'LangGraph', tier: 'ai' },
 ];
 
-const TIER_LABEL: Record<string, string> = {
-  frontend: 'Frontend',
-  mobile: 'Mobile',
-  backend: 'Backend',
-  data: 'Data',
-  cloud: 'Cloud / Infra',
-  ai: 'AI / ML',
-};
 
 export default function TechStack() {
+  const t = useCopy();
+  const TIER_LABEL = t.stack.tiers;
   return (
     <section id="stack" className="relative py-28 md:py-40 overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
@@ -45,20 +40,19 @@ export default function TechStack() {
         <div className="grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
             <SectionHeader
-              eyebrow="THE TOOLBOX"
-              index="05 ━━ STACK"
+              eyebrow={t.stack.eyebrow}
+              index={t.stack.index}
               title={
                 <>
-                  Modern engineering.<br />
-                  <span className="text-outline">Battle-tested choices.</span>
+                  {t.stack.titleA}<br />
+                  <span className="text-outline">{t.stack.titleB}</span>
                 </>
               }
             />
           </div>
           <div className="lg:col-span-5">
             <p className="text-dv-fog text-base md:text-lg leading-relaxed">
-              We pick boring where it matters and bleeding-edge where it pays off.
-              Every stack decision is owned by senior engineers and reviewed against your operating reality.
+              {t.stack.lead}
             </p>
           </div>
         </div>
@@ -82,7 +76,7 @@ export default function TechStack() {
               <div className="mono text-[10px] tracking-[0.28em] text-dv-gold uppercase">{label}</div>
               <div className="mt-4 display text-2xl md:text-3xl">
                 {TECH.filter((t) => t.tier === key).length}
-                <span className="text-dv-mute text-base ml-1">tools</span>
+                <span className="text-dv-mute text-base ml-1">{t.stack.toolsLabel}</span>
               </div>
               <div className="mt-3 text-[12px] text-dv-fog leading-relaxed">
                 {TECH.filter((t) => t.tier === key).map((t) => t.name).join(' · ')}

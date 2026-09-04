@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import SectionHeader from '../components/ui/SectionHeader';
 import { skipLoopingAnimation } from '../lib/device';
+import { useCopy, type Copy } from '../lib/i18n';
 
 const GLYPHS_ANIMATE = !skipLoopingAnimation;
 
@@ -15,55 +16,22 @@ type Problem = {
   visual: 'automation' | 'transformation' | 'data' | 'cx' | 'scale';
 };
 
-const PROBLEMS: Problem[] = [
-  {
-    id: '01',
-    title: 'BUSINESS AUTOMATION',
-    subtitle: 'Manual operations bleed margin.',
-    body: 'Most enterprises lose 20–30% of operating capacity to repetitive work and disconnected tools. We design event-driven systems and AI agents that compress workflows from days to minutes.',
-    metric: 'Event-driven',
-    metricLabel: 'Systems & AI agents',
-    visual: 'automation',
-  },
-  {
-    id: '02',
-    title: 'SLOW DIGITAL TRANSFORMATION',
-    subtitle: 'Legacy systems cap growth.',
-    body: 'Monolithic stacks block expansion and innovation. We replatform without ripping out — strangler migrations, modular services, and modern interfaces that ship in quarters, not years.',
-    metric: 'Strangler',
-    metricLabel: 'Migration, no big bang',
-    visual: 'transformation',
-  },
-  {
-    id: '03',
-    title: 'DATA CHAOS',
-    subtitle: 'Information that nobody trusts.',
-    body: 'When data lives in silos, decisions get slower and riskier. We build governed data platforms with AI-grade pipelines, semantic layers, and dashboards leaders actually use.',
-    metric: 'Governed',
-    metricLabel: 'Pipelines & semantic layer',
-    visual: 'data',
-  },
-  {
-    id: '04',
-    title: 'CUSTOMER EXPERIENCE ISSUES',
-    subtitle: 'Slow, ugly products lose revenue.',
-    body: 'Users churn out of friction. We design and engineer products with sub-second response times, considered motion, and the kind of detail you feel before you can name it.',
-    metric: 'Sub-second',
-    metricLabel: 'Response budget',
-    visual: 'cx',
-  },
-  {
-    id: '05',
-    title: 'SCALABILITY & PERFORMANCE',
-    subtitle: 'Systems that break under success.',
-    body: 'When traffic spikes you cannot afford to be the bottleneck. We architect for elasticity from day one — multi-region, observable, and ready for ten times the load.',
-    metric: 'Multi-region',
-    metricLabel: 'Elastic by design',
-    visual: 'scale',
-  },
+// Only the structural fields live here; all prose comes from the dictionary.
+const PROBLEM_VISUALS: Problem['visual'][] = [
+  'automation',
+  'transformation',
+  'data',
+  'cx',
+  'scale',
 ];
 
 export default function Problems() {
+  const t = useCopy();
+  const problems: Problem[] = t.problems.items.map((item, i) => ({
+    id: String(i + 1).padStart(2, '0'),
+    ...item,
+    visual: PROBLEM_VISUALS[i],
+  }));
   return (
     <section className="relative py-28 md:py-40 overflow-hidden" id="problems">
       <div className="absolute inset-0 grid-bg opacity-[0.08] pointer-events-none" />
@@ -71,24 +39,24 @@ export default function Problems() {
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-8">
         <SectionHeader
-          eyebrow="WHAT WE SOLVE"
-          index="01 ━━ PROBLEMS"
+          eyebrow={t.problems.eyebrow}
+          index={t.problems.index}
           title={
             <>
-              Five problems software<br />
-              <span className="text-outline">should be solving.</span>
+              {t.problems.titleA}<br />
+              <span className="text-outline">{t.problems.titleB}</span>
             </>
           }
-          description="The cost of doing nothing compounds every quarter. These are the recurring patterns we build for."
+          description={t.problems.description}
         />
 
         <div className="mt-20 grid gap-5 md:gap-6 lg:grid-cols-12">
           {/* First (large) card */}
-          <ProblemCard problem={PROBLEMS[0]} className="lg:col-span-7 lg:row-span-2" featured />
-          <ProblemCard problem={PROBLEMS[1]} className="lg:col-span-5" />
-          <ProblemCard problem={PROBLEMS[2]} className="lg:col-span-5" />
-          <ProblemCard problem={PROBLEMS[3]} className="lg:col-span-6" />
-          <ProblemCard problem={PROBLEMS[4]} className="lg:col-span-6" />
+          <ProblemCard copy={t.problems} problem={problems[0]} className="lg:col-span-7 lg:row-span-2" featured />
+          <ProblemCard copy={t.problems} problem={problems[1]} className="lg:col-span-5" />
+          <ProblemCard copy={t.problems} problem={problems[2]} className="lg:col-span-5" />
+          <ProblemCard copy={t.problems} problem={problems[3]} className="lg:col-span-6" />
+          <ProblemCard copy={t.problems} problem={problems[4]} className="lg:col-span-6" />
         </div>
       </div>
     </section>
@@ -97,10 +65,12 @@ export default function Problems() {
 
 function ProblemCard({
   problem,
+  copy,
   className = '',
   featured = false,
 }: {
   problem: Problem;
+  copy: Copy['problems'];
   className?: string;
   featured?: boolean;
 }) {
@@ -116,7 +86,7 @@ function ProblemCard({
       <div className="beam-line opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
       <div className="flex items-start justify-between mb-8">
-        <span className="mono text-[10px] tracking-[0.3em] text-dv-mute">PROBLEM {problem.id}</span>
+        <span className="mono text-[10px] tracking-[0.3em] text-dv-mute">{copy.itemLabel} {problem.id}</span>
         <ProblemVisual kind={problem.visual} featured={featured} />
       </div>
 
@@ -136,7 +106,7 @@ function ProblemCard({
           <div className="mono text-[10px] tracking-[0.25em] text-dv-mute mt-1.5 uppercase">{problem.metricLabel}</div>
         </div>
         <div className="opacity-0 group-hover:opacity-100 translate-x-[-8px] group-hover:translate-x-0 transition-all duration-400 mono text-[10px] tracking-[0.25em] text-dv-gold flex items-center gap-2">
-          EXPLORE
+          {copy.explore}
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M2 6h8m0 0L6 2m4 4L6 10" stroke="currentColor" strokeWidth="1.4" />
           </svg>

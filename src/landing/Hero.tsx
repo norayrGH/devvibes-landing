@@ -3,12 +3,18 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'moti
 import ParticleField from '../components/ui/ParticleField';
 import MagneticButton from '../components/ui/MagneticButton';
 import { useContent } from '../lib/useContent';
+import { useCopy, useLang } from '../lib/i18n';
 import { isTouch, skipLoopingAnimation } from '../lib/device';
 
 const pulse = !skipLoopingAnimation;
 
 export default function Hero() {
-  const hero = useContent('hero');
+  const t = useCopy();
+  const lang = useLang();
+  const remote = useContent('hero');
+  // Supabase holds English overrides so the admin still drives the live copy;
+  // other locales come from the bundled dictionary.
+  const hero = lang === 'en' ? remote : t.hero;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -104,15 +110,15 @@ export default function Hero() {
         </motion.div>
 
         <h1 className="display-tight text-[clamp(2.6rem,8.6vw,8rem)] leading-[0.86] max-w-[1200px]">
-          <Word delay={0.2}>We build</Word>{' '}
-          <Word delay={0.34}>software</Word>{' '}
+          <Word delay={0.2}>{t.hero.words[0]}</Word>{' '}
+          <Word delay={0.34}>{t.hero.words[1]}</Word>{' '}
           <Word delay={0.48} className="grad-text-gold">
-            that moves
+            {t.hero.words[2]}
           </Word>
           <br />
-          <Word delay={0.62}>business</Word>{' '}
+          <Word delay={0.62}>{t.hero.words[3]}</Word>{' '}
           <Word delay={0.76} className="grad-text-blue">
-            forward.
+            {t.hero.words[4]}
           </Word>
         </h1>
 
@@ -132,11 +138,11 @@ export default function Hero() {
           className="mt-10 flex flex-wrap items-center gap-4"
         >
           <MagneticButton href="#contact" variant="primary">
-            START PROJECT
+            {t.hero.ctaPrimary}
             <ArrowIcon />
           </MagneticButton>
           <MagneticButton href="#work" variant="ghost">
-            VIEW CASES
+            {t.hero.ctaGhost}
             <PlayIcon />
           </MagneticButton>
         </motion.div>
@@ -172,7 +178,7 @@ export default function Hero() {
         style={{ opacity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
       >
-        <span className="mono text-[10px] tracking-[0.3em] text-dv-mute">SCROLL</span>
+        <span className="mono text-[10px] tracking-[0.3em] text-dv-mute">{t.hero.scroll}</span>
         <div className="w-px h-10 bg-gradient-to-b from-dv-mute to-transparent relative overflow-hidden">
           <motion.div
             className="absolute top-0 inset-x-0 h-3 bg-dv-gold"

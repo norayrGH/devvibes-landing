@@ -1,39 +1,15 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import SectionHeader from '../components/ui/SectionHeader';
+import { useCopy, type Copy } from '../lib/i18n';
 
-const STEPS = [
-  {
-    id: '01',
-    label: 'DISCOVER',
-    title: 'Frame the problem.',
-    body: 'Workshops, technical audits, and customer research that turn ambition into a concrete plan with measurable outcomes.',
-    bullets: ['Stakeholder mapping', 'Technical audit', 'Product strategy', 'KPI definition'],
-  },
-  {
-    id: '02',
-    label: 'DESIGN',
-    title: 'Shape the experience.',
-    body: 'Senior design partners craft systems, flows, and motion. We prototype in fidelity so engineering ships from real artifacts.',
-    bullets: ['Design systems', 'Interaction & motion', 'High-fidelity prototypes', 'Accessibility'],
-  },
-  {
-    id: '03',
-    label: 'DEVELOP',
-    title: 'Engineer for production.',
-    body: 'Senior engineers ship in two-week increments against a live staging environment with automated quality gates.',
-    bullets: ['Type-safe codebases', 'CI/CD pipelines', 'Test automation', 'Security baselines'],
-  },
-  {
-    id: '04',
-    label: 'SCALE',
-    title: 'Run and grow.',
-    body: 'Observability, on-call, and continuous delivery. We stay long enough to make growth a non-event.',
-    bullets: ['Observability stack', 'Performance tuning', 'Cost optimization', 'Roadmap evolution'],
-  },
-];
 
 export default function Process() {
+  const t = useCopy();
+  const steps = t.process.steps.map((step, i) => ({
+    id: String(i + 1).padStart(2, '0'),
+    ...step,
+  }));
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -48,12 +24,12 @@ export default function Process() {
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-8">
         <SectionHeader
-          eyebrow="HOW WE WORK"
-          index="03 ━━ PROCESS"
+          eyebrow={t.process.eyebrow}
+          index={t.process.index}
           title={
             <>
-              From signal to scale.<br />
-              <span className="text-outline">Four disciplined steps.</span>
+              {t.process.titleA}<br />
+              <span className="text-outline">{t.process.titleB}</span>
             </>
           }
         />
@@ -67,8 +43,8 @@ export default function Process() {
           />
 
           <div className="grid md:grid-cols-2 gap-y-20">
-            {STEPS.map((step, i) => (
-              <StepRow key={step.id} step={step} index={i} />
+            {steps.map((step, i) => (
+              <StepRow key={step.id} step={step} index={i} stepLabel={t.process.stepLabel} />
             ))}
           </div>
         </div>
@@ -77,7 +53,9 @@ export default function Process() {
   );
 }
 
-function StepRow({ step, index }: { step: (typeof STEPS)[number]; index: number }) {
+type Step = Copy['process']['steps'][number] & { id: string };
+
+function StepRow({ step, index, stepLabel }: { step: Step; index: number; stepLabel: string }) {
   const isLeft = index % 2 === 0;
 
   return (
@@ -102,7 +80,7 @@ function StepRow({ step, index }: { step: (typeof STEPS)[number]; index: number 
 
       <div className="glass-card p-7 md:p-9 inline-block w-full">
         <div className={`flex items-center gap-3 ${isLeft ? 'md:justify-end' : ''}`}>
-          <span className="eyebrow-gold">STEP {step.id}</span>
+          <span className="eyebrow-gold">{stepLabel} {step.id}</span>
           <span className="h-px w-8 bg-dv-gold/40" />
           <span className="mono text-[10px] tracking-[0.28em] text-dv-mute">{step.label}</span>
         </div>

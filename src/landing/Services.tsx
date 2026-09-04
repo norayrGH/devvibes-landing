@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import SectionHeader from '../components/ui/SectionHeader';
+import { useCopy } from '../lib/i18n';
 
 type Service = {
   id: string;
@@ -8,58 +9,27 @@ type Service = {
   tags: string[];
 };
 
-const SERVICES: Service[] = [
-  {
-    id: '01',
-    title: 'AI SOLUTIONS',
-    body: 'Production-grade AI agents, retrieval pipelines, and inference platforms with measurable ROI.',
-    tags: ['LLMS', 'AGENTS', 'RAG', 'EVALS'],
-  },
-  {
-    id: '02',
-    title: 'SAAS PLATFORMS',
-    body: 'Multi-tenant SaaS with auth, billing, role-based access, and onboarding done right.',
-    tags: ['MULTI-TENANT', 'BILLING', 'RBAC'],
-  },
-  {
-    id: '03',
-    title: 'MOBILE APPS',
-    body: 'Native iOS & Android, plus React Native, engineered for performance and design quality.',
-    tags: ['SWIFTUI', 'KOTLIN', 'RN'],
-  },
-  {
-    id: '04',
-    title: 'CLOUD ARCHITECTURE',
-    body: 'Cloud-native foundations on AWS and GCP — resilient, observable, and built for scale.',
-    tags: ['AWS', 'GCP', 'TERRAFORM'],
-  },
-  {
-    id: '05',
-    title: 'ENTERPRISE SYSTEMS',
-    body: 'Internal platforms, ERPs, and integrations that connect across your business surface.',
-    tags: ['INTEGRATIONS', 'WORKFLOWS', 'API'],
-  },
-  {
-    id: '06',
-    title: 'UI / UX DESIGN',
-    body: 'Design systems, motion, and product UX that make complex software feel obvious.',
-    tags: ['SYSTEMS', 'MOTION', 'RESEARCH'],
-  },
-  {
-    id: '07',
-    title: 'DEVOPS & INFRASTRUCTURE',
-    body: 'CI/CD, observability, security baselines, and runbooks your team can rely on.',
-    tags: ['CI/CD', 'OBSERVABILITY', 'SRE'],
-  },
-  {
-    id: '08',
-    title: 'WEB APPLICATIONS',
-    body: 'Performant, accessible web apps with cinematic motion and best-in-class delivery.',
-    tags: ['NEXT.JS', 'REACT', 'PERF'],
-  },
+// Tags stay untranslated on purpose: they are product and protocol names, and
+// transliterating "RAG" or "CI/CD" makes them harder to recognise, not easier.
+const SERVICE_TAGS: string[][] = [
+  ['LLMS', 'AGENTS', 'RAG', 'EVALS'],
+  ['MULTI-TENANT', 'BILLING', 'RBAC'],
+  ['SWIFTUI', 'KOTLIN', 'RN'],
+  ['AWS', 'GCP', 'TERRAFORM'],
+  ['INTEGRATIONS', 'WORKFLOWS', 'API'],
+  ['SYSTEMS', 'MOTION', 'RESEARCH'],
+  ['CI/CD', 'OBSERVABILITY', 'SRE'],
+  ['NEXT.JS', 'REACT', 'PERF'],
 ];
 
 export default function Services() {
+  const t = useCopy();
+  const services: Service[] = t.services.items.map((item, i) => ({
+    id: String(i + 1).padStart(2, '0'),
+    title: item.title,
+    body: item.body,
+    tags: SERVICE_TAGS[i] ?? [],
+  }));
   return (
     <section id="services" className="relative py-28 md:py-40 overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
@@ -69,26 +39,25 @@ export default function Services() {
         <div className="grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
             <SectionHeader
-              eyebrow="HOW WE HELP"
-              index="02 ━━ SERVICES"
+              eyebrow={t.services.eyebrow}
+              index={t.services.index}
               title={
                 <>
-                  An engineering studio<br />
-                  <span className="text-outline">that ships.</span>
+                  {t.services.titleA}<br />
+                  <span className="text-outline">{t.services.titleB}</span>
                 </>
               }
             />
           </div>
           <div className="lg:col-span-5">
             <p className="text-dv-fog text-base md:text-lg leading-relaxed">
-              Eight tightly integrated practices. One operating standard. We work as a single accountable
-              team — design, engineering, and delivery — for the full lifetime of your product.
+              {t.services.lead}
             </p>
           </div>
         </div>
 
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.05] rounded-3xl overflow-hidden border border-white/[0.06]">
-          {SERVICES.map((s, i) => (
+          {services.map((s, i) => (
             <ServiceCell key={s.id} service={s} index={i} />
           ))}
         </div>

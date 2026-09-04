@@ -1,28 +1,20 @@
 import { motion } from 'motion/react';
 import { TOGHRAMAJYAN } from '../lib/work';
+import { useCopy } from '../lib/i18n';
 
 // Capabilities, not client logos. A logo marquee is social proof by volume, and
 // inventing it is exactly what this page is being cleaned up for — the ticker
 // keeps the motion while saying something true. Mirrors the Services section.
-const CAPABILITIES = [
-  'AI SOLUTIONS',
-  'SAAS PLATFORMS',
-  'MOBILE APPS',
-  'CLOUD ARCHITECTURE',
-  'ENTERPRISE SYSTEMS',
-  'UI / UX DESIGN',
-  'DEVOPS & INFRASTRUCTURE',
-  'WEB APPLICATIONS',
-];
 
 export default function Trust() {
+  const t = useCopy();
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-dv-night/40 to-transparent pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-5 md:px-8">
         <div className="text-center mb-12">
-          <span className="eyebrow">CURRENTLY BUILDING FOR</span>
+          <span className="eyebrow">{t.trust.building}</span>
         </div>
 
         {/* One real client, presented as the proof it is. */}
@@ -44,7 +36,7 @@ export default function Trust() {
                 {TOGHRAMAJYAN.name}
               </div>
               <div className="mono text-[10px] tracking-[0.2em] text-dv-mute mt-2 uppercase">
-                {TOGHRAMAJYAN.sector} · {TOGHRAMAJYAN.location}
+                {t.work.cases[0].sector} · {t.work.cases[0].location}
               </div>
             </div>
             <span className="w-10 h-10 rounded-full glass flex items-center justify-center shrink-0 group-hover:bg-dv-gold group-hover:text-black transition-colors duration-300">
@@ -61,13 +53,13 @@ export default function Trust() {
         </motion.div>
 
         <div className="text-center mt-16 mb-10">
-          <span className="eyebrow">WHAT WE BUILD</span>
+          <span className="eyebrow">{t.trust.whatWeBuild}</span>
         </div>
 
         <div className="relative">
           <div className="overflow-hidden mask-fade">
             <div className="flex gap-16 animate-scroll-x w-max">
-              {[...CAPABILITIES, ...CAPABILITIES].map((item, i) => (
+              {[...t.trust.capabilities, ...t.trust.capabilities].map((item, i) => (
                 <div
                   key={i}
                   className="display text-xl md:text-2xl text-dv-mute whitespace-nowrap tracking-[0.04em]"

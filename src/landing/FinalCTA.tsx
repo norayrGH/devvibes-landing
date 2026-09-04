@@ -3,8 +3,10 @@ import { motion, useInView, useScroll, useTransform } from 'motion/react';
 import MagneticButton from '../components/ui/MagneticButton';
 import ParticleField from '../components/ui/ParticleField';
 import { useContent } from '../lib/useContent';
+import { useCopy } from '../lib/i18n';
 
 export default function FinalCTA() {
+  const t = useCopy();
   const contact = useContent('contact');
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -43,16 +45,16 @@ export default function FinalCTA() {
           transition={{ duration: 0.8 }}
           className="eyebrow-gold inline-block"
         >
-          07 ━━ READY?
+          {t.cta.eyebrow}
         </motion.span>
 
         <h2 className="display mt-8 text-[clamp(2.8rem,11vw,10rem)] leading-[0.86] tracking-[-0.04em]">
           <Reveal delay={0.05}>
-            <span className="grad-text-blue">LET&apos;S BUILD</span>
+            <span className="grad-text-blue">{t.cta.headA}</span>
           </Reveal>
           <br />
           <Reveal delay={0.15}>
-            <span className="grad-text-gold">THE FUTURE.</span>
+            <span className="grad-text-gold">{t.cta.headB}</span>
           </Reveal>
         </h2>
 
@@ -63,8 +65,7 @@ export default function FinalCTA() {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
           className="mt-10 mx-auto max-w-2xl text-dv-fog text-base md:text-lg leading-relaxed"
         >
-          Tell us about the platform you want to build, replace, or scale.
-          We&apos;ll respond within one business day with a senior partner attached.
+          {t.cta.body}
         </motion.p>
 
         <motion.div
@@ -75,11 +76,11 @@ export default function FinalCTA() {
           className="mt-12 flex flex-wrap items-center justify-center gap-4"
         >
           <MagneticButton href={`mailto:${contact.email}`} variant="primary">
-            START A PROJECT
+            {t.cta.primary}
             <ArrowIcon />
           </MagneticButton>
           <MagneticButton href="#work" variant="ghost">
-            BOOK A CALL
+            {t.cta.ghost}
             <CalendarIcon />
           </MagneticButton>
         </motion.div>
@@ -92,10 +93,10 @@ export default function FinalCTA() {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 max-w-3xl mx-auto"
         >
           {[
-            [contact.email, 'Mail'],
-            [contact.phone, 'Voice'],
-            [contact.studios, 'Studios'],
-            [contact.hours, 'Hours'],
+            [contact.email, t.cta.labels.mail],
+            [contact.phone, t.cta.labels.voice],
+            [contact.studios, t.cta.labels.studios],
+            [contact.hours, t.cta.labels.hours],
           ].map(([v, k]) => (
             <div key={k} className="text-left md:text-center">
               <div className="mono text-[10px] tracking-[0.28em] text-dv-mute uppercase">{k}</div>

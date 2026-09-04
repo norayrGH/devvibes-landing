@@ -1,17 +1,22 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { LANGS, setLang, useCopy, useLang } from '../lib/i18n';
 
-const NAV = [
-  { label: 'WORK', href: '#work' },
-  { label: 'SERVICES', href: '#services' },
-  { label: 'PROCESS', href: '#process' },
-  { label: 'STACK', href: '#stack' },
-  { label: 'CONTACT', href: '#contact' },
-];
+const HREFS = ['#work', '#services', '#process', '#stack', '#contact'] as const;
 
 export default function Header() {
+  const t = useCopy();
+  const lang = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const nav = [
+    { label: t.nav.work, href: HREFS[0] },
+    { label: t.nav.services, href: HREFS[1] },
+    { label: t.nav.process, href: HREFS[2] },
+    { label: t.nav.stack, href: HREFS[3] },
+    { label: t.nav.contact, href: HREFS[4] },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -48,7 +53,7 @@ export default function Header() {
         </a>
 
         <nav className="hidden lg:flex items-center gap-1">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <a
               key={item.label}
               href={item.href}
@@ -66,17 +71,18 @@ export default function Header() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-dv-gold opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-dv-gold" />
             </span>
-            ACCEPTING Q3
+            {t.header.availability}
           </span>
           <a href="#contact" className="btn-primary !py-2.5 !px-4 !text-[10px]">
-            START PROJECT
+            {t.header.cta}
             <ArrowIcon />
           </a>
+          <LangSwitch lang={lang} />
         </div>
 
         <button
           onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
+          aria-label={open ? t.header.close : t.header.menu}
           className="lg:hidden w-10 h-10 rounded-full glass flex items-center justify-center"
         >
           <div className="flex flex-col gap-1.5">
@@ -95,7 +101,7 @@ export default function Header() {
             transition={{ duration: 0.3 }}
             className="lg:hidden mx-5 mt-2 rounded-2xl glass-dark p-5 flex flex-col gap-2"
           >
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -106,13 +112,35 @@ export default function Header() {
               </a>
             ))}
             <a href="#contact" className="btn-primary !py-2.5 !px-4 !text-[10px] mt-2 w-full justify-center" onClick={() => setOpen(false)}>
-              START PROJECT
+              {t.header.cta}
               <ArrowIcon />
             </a>
+            <div className="mt-1 flex justify-center">
+              <LangSwitch lang={lang} />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.header>
+  );
+}
+
+function LangSwitch({ lang }: { lang: (typeof LANGS)[number]['code'] }) {
+  return (
+    <div className="flex items-center rounded-full glass p-0.5" role="group">
+      {LANGS.map((l) => (
+        <button
+          key={l.code}
+          onClick={() => setLang(l.code)}
+          aria-pressed={l.code === lang}
+          className={`px-2.5 py-1 rounded-full mono text-[10px] tracking-[0.16em] transition-colors ${
+            l.code === lang ? 'bg-dv-gold text-black' : 'text-dv-mute hover:text-white'
+          }`}
+        >
+          {l.label}
+        </button>
+      ))}
+    </div>
   );
 }
 
