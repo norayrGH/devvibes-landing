@@ -97,12 +97,14 @@ export default function FinalCTA() {
             [contact.phone, t.cta.labels.voice],
             [contact.studios, t.cta.labels.studios],
             [contact.hours, t.cta.labels.hours],
-          ].map(([v, k]) => (
-            <div key={k} className="text-left md:text-center">
-              <div className="mono text-[10px] tracking-[0.28em] text-dv-mute uppercase">{k}</div>
-              <div className="display text-sm md:text-base mt-2 tracking-[0.02em]">{v}</div>
-            </div>
-          ))}
+          ]
+            .filter(([v]) => Boolean(v))
+            .map(([v, k]) => (
+              <div key={k} className="text-left md:text-center">
+                <div className="mono text-[10px] tracking-[0.28em] text-dv-mute uppercase">{k}</div>
+                <div className="display text-sm md:text-base mt-2 tracking-[0.02em]">{v}</div>
+              </div>
+            ))}
         </motion.div>
       </motion.div>
     </section>

@@ -144,9 +144,8 @@ export type Copy = {
     tagA: string;
     tagB: string;
     body: string;
-    groups: { title: string; items: string[] }[];
+    groups: { title: string; items: { label: string; href: string }[] }[];
     rights: string;
-    legal: string[];
     status: string;
   };
 };
@@ -457,16 +456,22 @@ const en: Copy = {
     tagA: 'Premium software',
     tagB: 'for ambitious teams.',
     body: 'A studio of senior engineers, designers, and product leaders building software that ships and stays shipped.',
+    // Only destinations that exist. Careers, Press, Testimonials, Partners and
+    // Awards all pointed at "#" — an empty section reads worse than a missing
+    // one, and nineteen dead links read as an unfinished template.
     groups: [
-      { title: 'Studio', items: ['About', 'Process', 'Careers', 'Press'] },
       {
-        title: 'Services',
-        items: ['AI Solutions', 'SaaS Platforms', 'Mobile Apps', 'Enterprise Systems'],
+        title: 'Sections',
+        items: [
+          { label: 'Work', href: '#work' },
+          { label: 'Services', href: '#services' },
+          { label: 'Process', href: '#process' },
+          { label: 'Stack', href: '#stack' },
+          { label: 'Contact', href: '#contact' },
+        ],
       },
-      { title: 'Work', items: ['Case studies', 'Testimonials', 'Partners', 'Awards'] },
     ],
     rights: '© 2026 DEVVIBES STUDIO · ALL RIGHTS RESERVED',
-    legal: ['Privacy', 'Terms', 'Cookies'],
     status: 'ALL SYSTEMS NOMINAL',
   },
 };
@@ -788,15 +793,18 @@ const hy: Copy = {
     tagB: 'ամբիցիոզ թիմերի համար։',
     body: 'Ավագ ինժեներների, դիզայներների և արտադրանքի ղեկավարների ստուդիա, որը կառուցում է ծրագրեր՝ գործարկվող և գործող մնացող։',
     groups: [
-      { title: 'Ստուդիա', items: ['Մեր մասին', 'Գործընթաց', 'Կարիերա', 'Մամուլ'] },
       {
-        title: 'Ծառայություններ',
-        items: ['AI լուծումներ', 'SaaS հարթակներ', 'Մոբայլ հավելվածներ', 'Կորպորատիվ համակարգեր'],
+        title: 'Բաժիններ',
+        items: [
+          { label: 'Աշխատանքներ', href: '#work' },
+          { label: 'Ծառայություններ', href: '#services' },
+          { label: 'Գործընթաց', href: '#process' },
+          { label: 'Տեխնոլոգիաներ', href: '#stack' },
+          { label: 'Կապ', href: '#contact' },
+        ],
       },
-      { title: 'Աշխատանքներ', items: ['Դեպքեր', 'Կարծիքներ', 'Գործընկերներ', 'Մրցանակներ'] },
     ],
     rights: '© 2026 DEVVIBES STUDIO · ԲՈԼՈՐ ԻՐԱՎՈՒՆՔՆԵՐԸ ՊԱՀՊԱՆՎԱԾ ԵՆ',
-    legal: ['Գաղտնիություն', 'Պայմաններ', 'Cookie-ներ'],
     status: 'ԲՈԼՈՐ ՀԱՄԱԿԱՐԳԵՐԸ ԿԱՅՈՒՆ ԵՆ',
   },
 };

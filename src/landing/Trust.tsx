@@ -28,7 +28,7 @@ export default function Trust() {
           <a
             href={TOGHRAMAJYAN.live?.url ?? '#work'}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             className="group glass-card px-7 py-6 md:px-10 md:py-7 flex items-center gap-6 md:gap-9 hover:border-white/15 transition-colors"
           >
             <div>

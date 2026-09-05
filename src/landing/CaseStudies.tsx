@@ -220,7 +220,7 @@ function LiveLink({ study, label, noLink }: { study: CaseStudy; label: string; n
 
   return (
     <div className="mt-10 flex flex-wrap items-center gap-4">
-      <a href={study.live.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+      <a href={study.live.url} target="_blank" rel="noopener noreferrer nofollow" className="btn-primary">
         {label}
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
           <path

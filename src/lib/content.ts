@@ -43,10 +43,15 @@ export const DEFAULT_CONTENT: SiteContent = {
       { value: 'Design', label: 'UI/UX in-house' },
     ],
   },
+  // A wrong contact detail costs more than a missing one. +1 (415) 555-01xx is
+  // the reserved North American film-and-TV range, so it reads to anyone who
+  // recognises it as proof the company is a template. The mail domain also has
+  // to match the site's own domain. Empty fields are hidden rather than shown
+  // blank — fill them from the admin once the real ones exist.
   contact: {
-    email: 'hello@devvibes.studio',
-    phone: '+1 (415) 555 0142',
-    studios: 'Yerevan · Berlin',
+    email: 'hello@devvibes.dev',
+    phone: '',
+    studios: 'Yerevan',
     hours: 'Mon — Fri 09:00–19:00',
   },
 };
