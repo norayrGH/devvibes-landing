@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LANGS, setLang, useCopy, useLang } from '../lib/i18n';
+import { LANGS, pathForLang, useCopy, useLang } from '../lib/i18n';
 
 const HREFS = ['#work', '#services', '#process', '#stack', '#contact'] as const;
 
@@ -125,22 +125,32 @@ export default function Header() {
   );
 }
 
+/**
+ * Links, not buttons. Each locale is its own prerendered URL (/ and /hy/), so
+ * switching has to be a navigation — toggling in place would leave the address
+ * bar, the canonical and the served HTML all describing a different language
+ * than the one on screen.
+ */
 function LangSwitch({ lang }: { lang: (typeof LANGS)[number]['code'] }) {
   return (
-    <div className="flex items-center rounded-full glass p-0.5" role="group">
-      {LANGS.map((l) => (
-        <button
-          key={l.code}
-          onClick={() => setLang(l.code)}
-          aria-pressed={l.code === lang}
-          className={`px-2.5 py-1 rounded-full mono text-[10px] tracking-[0.16em] transition-colors ${
-            l.code === lang ? 'bg-dv-gold text-black' : 'text-dv-mute hover:text-white'
-          }`}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
+    <nav className="flex items-center rounded-full glass p-0.5" aria-label="Language">
+      {LANGS.map((l) => {
+        const active = l.code === lang;
+        return (
+          <a
+            key={l.code}
+            href={pathForLang(l.code)}
+            hrefLang={l.code}
+            aria-current={active ? 'true' : undefined}
+            className={`px-2.5 py-1 rounded-full mono text-[10px] tracking-[0.16em] transition-colors ${
+              active ? 'bg-dv-gold text-black' : 'text-dv-mute hover:text-white'
+            }`}
+          >
+            {l.label}
+          </a>
+        );
+      })}
+    </nav>
   );
 }
 

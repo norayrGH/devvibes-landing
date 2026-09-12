@@ -52,8 +52,8 @@ export const DEFAULT_CONTENT: SiteContent = {
   // blank — fill them from the admin once the real ones exist.
   contact: {
     email: 'hello@devvibes.dev',
-    phone: '',
-    whatsapp: '',
+    phone: '+374 95 073 707',
+    whatsapp: '37495073707',
     studios: 'Yerevan',
     hours: 'Mon — Fri 09:00–19:00',
   },

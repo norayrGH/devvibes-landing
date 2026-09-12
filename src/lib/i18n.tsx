@@ -10,24 +10,39 @@ import { useSyncExternalStore } from 'react';
 
 export type Lang = 'en' | 'hy';
 
-const STORAGE_KEY = 'dv:lang';
 export const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' },
   { code: 'hy', label: 'ՀԱՅ' },
 ];
 
+/** `/` is English, `/hy/` is Armenian. Nothing else decides. */
+export function langFromPath(pathname: string): Lang {
+  return /^\/hy(\/|$)/.test(pathname) ? 'hy' : 'en';
+}
+
+/** The canonical path for a locale — what the switcher links to. */
+export function pathForLang(lang: Lang): string {
+  return lang === 'hy' ? '/hy/' : '/';
+}
+
+// The URL is the single source of truth, deliberately. Reading a saved choice
+// or navigator.language here would let one URL serve two languages, which is
+// precisely what hreflang exists to prevent: the crawler indexes whichever it
+// happened to get, and the canonical no longer describes the content. The
+// trade-off is that an Armenian-speaking visitor lands on English at `/` and
+// has to press ՀԱՅ once; the alternative is an auto-redirect, which is worse
+// for both users and crawlers.
 function detect(): Lang {
   if (typeof window === 'undefined') return 'en';
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === 'en' || saved === 'hy') return saved;
-  } catch {
-    // Blocked storage — fall through to the browser's preference.
-  }
-  return navigator.language?.toLowerCase().startsWith('hy') ? 'hy' : 'en';
+  return langFromPath(window.location.pathname);
 }
 
 let current: Lang = detect();
+
+/** Build-time only: lets the prerenderer render each locale in turn. */
+export function setLangForRender(lang: Lang) {
+  current = lang;
+}
 const listeners = new Set<() => void>();
 
 /** Mirrors the language onto <html> so CSS can swap font stacks. */
@@ -48,11 +63,6 @@ function applyMeta(lang: Lang) {
 export function setLang(lang: Lang) {
   if (lang === current) return;
   current = lang;
-  try {
-    localStorage.setItem(STORAGE_KEY, lang);
-  } catch {
-    // Non-fatal: the choice just won't survive a reload.
-  }
   syncDocument(lang);
   applyMeta(lang);
   listeners.forEach((l) => l());
@@ -65,7 +75,10 @@ export function useLang(): Lang {
       return () => listeners.delete(onChange);
     },
     () => current,
-    () => 'en',
+    // Server snapshot must follow `current` too: the prerenderer sets it per
+    // locale before each renderToString, and on the client `current` is derived
+    // from the path, so the two always agree on the first render.
+    () => current,
   );
 }
 
