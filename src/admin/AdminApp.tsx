@@ -335,6 +335,12 @@ function ContactEditor() {
           onChange={(v) => setContent({ ...content, phone: v })}
         />
         <Field
+          label="WhatsApp"
+          value={content.whatsapp}
+          onChange={(v) => setContent({ ...content, whatsapp: v })}
+          hint="Digits only, no + — e.g. 37412345678. Blank hides the button."
+        />
+        <Field
           label="Studios"
           value={content.studios}
           onChange={(v) => setContent({ ...content, studios: v })}

@@ -8,6 +8,35 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/brand/logo-mark.svg" />
     <title>DEVVIBES — We Build Software That Moves Business Forward</title>
+    <link rel="canonical" href="https://devvibes.dev/" />
+
+    <!-- Social cards. These must stay in the server-delivered HTML: WhatsApp,
+         Telegram, Slack, iMessage and Twitter scrapers do not execute JS, so a
+         JS-injected tag is invisible to every one of them. Absolute URLs for
+         the same reason — scrapers do not resolve relative paths reliably. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="DEVVIBES" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="hy_AM" />
+    <meta property="og:url" content="https://devvibes.dev/" />
+    <meta property="og:title" content="DEVVIBES — We Build Software That Moves Business Forward" />
+    <meta
+      property="og:description"
+      content="A senior engineering studio designing and shipping AI, web, and mobile platforms — from first architecture through to the system running in production."
+    />
+    <meta property="og:image" content="https://devvibes.dev/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DEVVIBES — we build software that moves business forward" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DEVVIBES — We Build Software That Moves Business Forward" />
+    <meta
+      name="twitter:description"
+      content="A senior engineering studio designing and shipping AI, web, and mobile platforms — from first architecture through to the system running in production."
+    />
+    <meta name="twitter:image" content="https://devvibes.dev/og-image.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Trimmed from 13 weights to the 7 actually used. Loaded non-blocking:
@@ -25,6 +54,83 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap"
       />
     </noscript>
+
+    <!-- Structured data. Only fields we can actually stand behind: there are no
+         social profiles yet, so `sameAs` is omitted rather than filled with
+         guesses, and no published pricing, so `priceRange` is omitted too. Add
+         both once they exist — an invented value here is worse than a gap. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://devvibes.dev/#organization",
+            "name": "DEVVIBES",
+            "alternateName": "DEVVIBES Studio",
+            "url": "https://devvibes.dev/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://devvibes.dev/brand/logo-512.png",
+              "width": 512,
+              "height": 512
+            },
+            "image": "https://devvibes.dev/og-image.jpg",
+            "description": "A senior engineering studio designing and shipping AI, web, and mobile platforms — from first architecture through to the system running in production.",
+            "email": "hello@devvibes.dev",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Yerevan",
+              "addressCountry": "AM"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "sales",
+              "email": "hello@devvibes.dev",
+              "availableLanguage": ["en", "hy"]
+            }
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://devvibes.dev/#service",
+            "name": "DEVVIBES",
+            "url": "https://devvibes.dev/",
+            "parentOrganization": { "@id": "https://devvibes.dev/#organization" },
+            "image": "https://devvibes.dev/og-image.jpg",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Yerevan",
+              "addressCountry": "AM"
+            },
+            "areaServed": { "@type": "Country", "name": "Armenia" },
+            "availableLanguage": ["en", "hy"],
+            "knowsLanguage": ["en", "hy"],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Services",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI solutions" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SaaS platforms" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mobile apps" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cloud architecture" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Enterprise systems" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "UI / UX design" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "DevOps and infrastructure" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web applications" } }
+              ]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://devvibes.dev/#website",
+            "url": "https://devvibes.dev/",
+            "name": "DEVVIBES",
+            "inLanguage": ["en", "hy"],
+            "publisher": { "@id": "https://devvibes.dev/#organization" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

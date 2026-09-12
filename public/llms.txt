@@ -1,0 +1,46 @@
+# DEVVIBES
+
+> A senior engineering studio in Yerevan, Armenia, designing and shipping AI,
+> web, and mobile platforms — from first architecture through to the system
+> running in production.
+
+Site: https://devvibes.dev/
+Contact: hello@devvibes.dev
+Languages: English, Armenian (in-page switcher)
+
+## What the studio does
+
+- AI solutions — production-grade agents, retrieval pipelines, inference platforms
+- SaaS platforms — multi-tenant, auth, billing, role-based access
+- Mobile apps — native iOS and Android, plus React Native
+- Cloud architecture — AWS and GCP foundations
+- Enterprise systems — internal platforms, ERPs, integrations
+- UI / UX design — design systems, motion, product UX
+- DevOps and infrastructure — CI/CD, observability, security baselines
+- Web applications
+
+## How the studio works
+
+Four steps: Discover (workshops, technical audit, product strategy), Design
+(design systems, prototypes, accessibility), Develop (two-week increments,
+CI/CD, test automation), Scale (observability, performance, cost).
+
+## Work
+
+- Toghramajyan Clinic — https://toghramajyanclinic.am/preview
+  Healthcare, Yerevan. Client engagement, pre-launch preview. Trilingual
+  (Armenian, Russian, English) clinic platform covering eight specialties, plus
+  an automated appointment-intake layer.
+
+- Hospity — https://hospity.devvibes.dev
+  Hospitality. DEVVIBES' own product, in private beta. Turns a hotel check-in QR
+  into guest self-service for room service, spa, activities and housekeeping,
+  with requests routed to staff in real time and a dashboard for owners.
+
+## Notes for indexers
+
+- The site is a single page; sections are in-page anchors (#work, #services,
+  #process, #stack, #contact).
+- Figures shown are scope facts verifiable on the linked sites, not performance
+  claims. The studio publishes no invented metrics or client testimonials.
+- No pricing is published. Enquire by email.

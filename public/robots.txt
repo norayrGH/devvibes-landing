@@ -1,0 +1,8 @@
+# devvibes.dev
+User-agent: *
+Allow: /
+
+# The admin lives behind a hash route on the same document, so it cannot be
+# excluded by path. It is auth-gated and carries no indexable content.
+
+Sitemap: https://devvibes.dev/sitemap.xml

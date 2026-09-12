@@ -4,6 +4,7 @@ import MagneticButton from '../components/ui/MagneticButton';
 import ParticleField from '../components/ui/ParticleField';
 import { useContent } from '../lib/useContent';
 import { useCopy } from '../lib/i18n';
+import { WhatsAppLink } from '../components/ui/WhatsAppButton';
 
 export default function FinalCTA() {
   const t = useCopy();
@@ -83,6 +84,7 @@ export default function FinalCTA() {
             {t.cta.ghost}
             <CalendarIcon />
           </MagneticButton>
+          <WhatsAppLink />
         </motion.div>
 
         <motion.div

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { prefersReducedMotion } from '../lib/device';
 
 // Minimum on-screen time, so the loader never flashes on a warm cache.
@@ -29,16 +29,18 @@ type Phase = 'visible' | 'fading' | 'gone';
  * stuck that way.
  */
 export default function Loader() {
-  const [phase, setPhase] = useState<Phase>(() =>
-    prefersReducedMotion || alreadySeen() ? 'gone' : 'visible',
-  );
-  const startedVisible = useRef(phase === 'visible');
+  // Starts 'visible' unconditionally so the first client render matches the
+  // prerendered HTML; the skip decision moves into the mount effect below.
+  const [phase, setPhase] = useState<Phase>('visible');
 
   // Mount-only: decide when the page is ready enough to start fading out.
   // This must not depend on `phase`, or flipping the phase would tear down its
   // own pending timers.
   useEffect(() => {
-    if (!startedVisible.current) return;
+    if (prefersReducedMotion || alreadySeen()) {
+      setPhase('gone');
+      return;
+    }
 
     const start = performance.now();
     let settled = false;
