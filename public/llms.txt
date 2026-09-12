@@ -4,9 +4,10 @@
 > web, and mobile platforms — from first architecture through to the system
 > running in production.
 
-Site: https://devvibes.dev/
-Contact: hello@devvibes.dev
-Languages: English, Armenian (in-page switcher)
+Site: https://devvibes.dev/            (English)
+     https://devvibes.dev/hy/         (Armenian)
+Contact: hello@devvibes.dev · +374 95 073 707 · WhatsApp https://wa.me/37495073707
+Languages: English, Armenian — separate URLs, not a client-side toggle
 
 ## What the studio does
 
@@ -39,8 +40,9 @@ CI/CD, test automation), Scale (observability, performance, cost).
 
 ## Notes for indexers
 
-- The site is a single page; sections are in-page anchors (#work, #services,
-  #process, #stack, #contact).
+- Each locale is a single page; sections are in-page anchors (#work, #services,
+  #process, #stack, #contact). / and /hy/ are the same content in two
+  languages and declare each other via hreflang.
 - Figures shown are scope facts verifiable on the linked sites, not performance
   claims. The studio publishes no invented metrics or client testimonials.
 - No pricing is published. Enquire by email.
