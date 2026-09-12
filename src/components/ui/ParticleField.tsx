@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isTouch, skipHeavyEffects } from '../../lib/device';
 
 type Props = {
@@ -30,9 +30,18 @@ type Particle = { x: number; y: number; vx: number; vy: number; r: number; alpha
 
 export default function ParticleField({ density = 90, className = '', mouse = true }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // The first render is identical on the server and the client; the canvas is
+  // opted into after mount. Branching on device capability during render would
+  // make the prerendered HTML disagree with the client on exactly the phones
+  // the check exists to protect, and hydration would tear.
+  const [enhanced, setEnhanced] = useState(false);
 
   useEffect(() => {
-    if (skipHeavyEffects) return;
+    if (!skipHeavyEffects) setEnhanced(true);
+  }, []);
+
+  useEffect(() => {
+    if (!enhanced) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -248,11 +257,12 @@ export default function ParticleField({ density = 90, className = '', mouse = tr
         window.removeEventListener('mouseleave', onLeave);
       }
     };
-  }, [density, mouse]);
+  }, [enhanced, density, mouse]);
 
   // On phones and reduced-motion the canvas is replaced by a static dot grid,
-  // which reads almost identically but costs nothing to composite.
-  if (skipHeavyEffects) {
+  // which reads almost identically but costs nothing to composite. This is also
+  // what the prerendered HTML contains.
+  if (!enhanced) {
     return (
       <div
         aria-hidden

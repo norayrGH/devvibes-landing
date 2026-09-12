@@ -17,6 +17,8 @@ export type HeroContent = {
 export type ContactContent = {
   email: string;
   phone: string;
+  /** Digits only, international format, no '+' — e.g. 37412345678. */
+  whatsapp: string;
   studios: string;
   hours: string;
 };
@@ -51,6 +53,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   contact: {
     email: 'hello@devvibes.dev',
     phone: '',
+    whatsapp: '',
     studios: 'Yerevan',
     hours: 'Mon — Fri 09:00–19:00',
   },

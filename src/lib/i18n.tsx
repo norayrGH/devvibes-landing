@@ -138,6 +138,7 @@ export type Copy = {
     body: string;
     primary: string;
     ghost: string;
+    whatsapp: string;
     labels: { mail: string; voice: string; studios: string; hours: string };
   };
   footer: {
@@ -450,6 +451,7 @@ const en: Copy = {
     body: "Tell us about the platform you want to build, replace, or scale. We'll respond within one business day with a senior partner attached.",
     primary: 'START A PROJECT',
     ghost: 'BOOK A CALL',
+    whatsapp: 'WHATSAPP',
     labels: { mail: 'Mail', voice: 'Voice', studios: 'Studios', hours: 'Hours' },
   },
   footer: {
@@ -786,6 +788,7 @@ const hy: Copy = {
     body: 'Պատմեք այն հարթակի մասին, որը ուզում եք կառուցել, փոխարինել կամ մասշտաբավորել։ Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում՝ ավագ գործընկերով։',
     primary: 'ՍԿՍԵԼ ՆԱԽԱԳԻԾ',
     ghost: 'ԱՄՐԱԳՐԵԼ ԶԱՆԳ',
+    whatsapp: 'WHATSAPP',
     labels: { mail: 'Փոստ', voice: 'Հեռախոս', studios: 'Ստուդիաներ', hours: 'Ժամեր' },
   },
   footer: {
